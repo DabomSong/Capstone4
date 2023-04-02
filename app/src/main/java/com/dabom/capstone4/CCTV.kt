@@ -1,6 +1,9 @@
 package com.dabom.capstone4
 
+<<<<<<< HEAD
 import android.net.Uri
+=======
+>>>>>>> 6a5aa6c (Initial commit)
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -29,9 +32,12 @@ class CCTV : Fragment() {
                 videoView.setVideoPath(filepath)
                 videoView.start()
 
+<<<<<<< HEAD
 //        var videoUri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
 //        videoView.setVideoURI(videoUri)
 //        videoView.start()
+=======
+>>>>>>> 6a5aa6c (Initial commit)
             }.addOnFailureListener { exception ->
                 Log.e("CCTV", "File download failed: ${exception.message}")
                 // 파일 다운로드 실패 시 예외 처리 코드를 작성합니다.
@@ -46,9 +52,12 @@ class CCTV : Fragment() {
                 videoView2.setVideoPath(filepath)
                 videoView2.start()
 
+<<<<<<< HEAD
 //        var videoUri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
 //        videoView.setVideoURI(videoUri)
 //        videoView.start()
+=======
+>>>>>>> 6a5aa6c (Initial commit)
             }.addOnFailureListener { exception ->
                 Log.e("CCTV", "File download failed: ${exception.message}")
                 // 파일 다운로드 실패 시 예외 처리 코드를 작성합니다.
