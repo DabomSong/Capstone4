@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+    <item android:title="CCTV"
+        android:id="@+id/cctv"
+        android:icon="@drawable/ic_baseline_cctv_24"/>
+    <item android:title="Employee"
+        android:id="@+id/employee"
+        android:icon="@drawable/ic_baseline_employ_24"/>
+    <item android:title="Settings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_person_24"/>
+</menu>

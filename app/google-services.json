@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "1060000265971",
+    "firebase_url": "https://capstone-e566b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "capstone-e566b",
+    "storage_bucket": "capstone-e566b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060000265971:android:68f20f715741c23e6c6986",
+        "android_client_info": {
+          "package_name": "com.dabom.capstone.Kim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060000265971-3qqgh1cg27b6tie9v2og3n88unh26c73.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dabom.capstone.Kim",
+            "certificate_hash": "98cde7adb38f0480eabb39250e9e94d6c0973244"
+          }
+        },
+        {
+          "client_id": "1060000265971-4di8qjlflvs72qroikkpmfj80htpaod3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsDzT2qXb3EDbicc6IgEgkv0hxyM60QJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060000265971-4di8qjlflvs72qroikkpmfj80htpaod3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060000265971:android:cf03c1b370d93cf66c6986",
+        "android_client_info": {
+          "package_name": "com.dabom.capstone3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060000265971-4di8qjlflvs72qroikkpmfj80htpaod3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsDzT2qXb3EDbicc6IgEgkv0hxyM60QJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060000265971-4di8qjlflvs72qroikkpmfj80htpaod3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060000265971:android:36362088f31d41536c6986",
+        "android_client_info": {
+          "package_name": "com.dabom.capstone4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060000265971-4di8qjlflvs72qroikkpmfj80htpaod3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsDzT2qXb3EDbicc6IgEgkv0hxyM60QJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060000265971-4di8qjlflvs72qroikkpmfj80htpaod3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
