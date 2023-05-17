@@ -1,59 +1,106 @@
 package com.dabom.capstone4
 
+import android.content.ContentValues.TAG
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.dabom.capstone4.databinding.FragmentHomeBinding
+import com.google.firebase.database.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import org.eazegraph.lib.charts.PieChart
+import org.eazegraph.lib.models.PieModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Home.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Home : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var database: DatabaseReference
+    private lateinit var pieChart: PieChart
+    private lateinit var presentCountTextView: TextView
+    private lateinit var absentCountTextView: TextView
+    private lateinit var lateCountTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Home.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Home().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        pieChart = binding.piechart
+        presentCountTextView = binding.present
+        absentCountTextView = binding.absent
+        lateCountTextView = binding.late
+
+        // Firebase 실시간 데이터베이스의 "users" 레퍼런스를 가져옴
+        database = FirebaseDatabase.getInstance().getReference("users")
+
+        // Firebase 실시간 데이터베이스에서 데이터를 가져와서 출결한 사람 수를 표시
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var presentCount = 0
+                var absentCount = 0
+                var lateCount = 0
+
+                for (userSnapshot in dataSnapshot.children) {
+                    val attendance = userSnapshot.child("Attendance").getValue(Boolean::class.java)
+                    if (attendance != null) {
+                        if (attendance) {
+                            presentCount++
+                        } else {
+                            absentCount++
+                        }
+                    }
                 }
+
+                updateAttendanceChart(presentCount, absentCount, lateCount)
             }
+
+            override fun onCancelled(error: DatabaseError) {
+                // 실패 시 로그 출력
+                Log.e(TAG, "Failed to read value.", error.toException())
+            }
+        })
+    }
+
+    private fun updateAttendanceChart(presentCount: Int, absentCount: Int, lateCount: Int) {
+        val totalAttendance = presentCount + absentCount + lateCount
+
+        presentCountTextView.text = "출근: $presentCount"
+        absentCountTextView.text = "결근: $absentCount"
+        lateCountTextView.text = "지각: $lateCount"
+
+        pieChart.clearChart()
+        pieChart.addPieSlice(
+            PieModel(
+                "Present",
+                presentCount.toFloat(),
+                Color.parseColor("#66BB6A")
+            )
+        )
+        pieChart.addPieSlice(
+            PieModel(
+                "Absent",
+                absentCount.toFloat(),
+                Color.parseColor("#EF5350")
+            )
+        )
+        pieChart.addPieSlice(
+            PieModel(
+                "Late",
+                lateCount.toFloat(),
+                Color.parseColor("#FFA726")
+            )
+        )
+
+        pieChart.startAnimation()
     }
 }
+
