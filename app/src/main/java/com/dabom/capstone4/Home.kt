@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.TextView
 import com.dabom.capstone4.databinding.FragmentHomeBinding
 import com.google.firebase.database.*
@@ -38,6 +39,17 @@ class Home : Fragment() {
         presentCountTextView = binding.present
         absentCountTextView = binding.absent
         lateCountTextView = binding.late
+
+        val webView1: WebView = binding.webView1
+        val webView2: WebView = binding.webView2
+
+        // WebView1 설정
+        webView1.loadUrl("http://172.18.197.204/")
+        webView1.settings.javaScriptEnabled = true
+
+        // WebView2 설정
+        webView2.loadUrl("http://172.18.197.204/")
+        webView2.settings.javaScriptEnabled = true
 
         // Firebase 실시간 데이터베이스의 "users" 레퍼런스를 가져옴
         database = FirebaseDatabase.getInstance().getReference("users")
