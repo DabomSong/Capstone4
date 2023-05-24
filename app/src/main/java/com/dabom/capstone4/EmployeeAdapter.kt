@@ -39,7 +39,7 @@ class EmployeeAdapter : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val idTextView: TextView = itemView.findViewById(R.id.idTextView)
+//        private val idTextView: TextView = itemView.findViewById(R.id.idTextView)
         private val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
         private val ageTextView: TextView = itemView.findViewById(R.id.ageTextView)
         private val deptTextView: TextView = itemView.findViewById(R.id.deptTextView)
@@ -47,7 +47,7 @@ class EmployeeAdapter : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
 
 
         fun bind(item: EmployeeData) {
-            idTextView.text = item.id
+//            idTextView.text = item.id
             nameTextView.text = item.name
             ageTextView.text = item.age
             deptTextView.text = item.dept

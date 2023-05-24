@@ -20,7 +20,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var emergencyRef: DatabaseReference
+    private lateinit var attentionRef: DatabaseReference
     private lateinit var emergencyListener: ValueEventListener
+    private lateinit var attentionListener: ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
         emergencyRef = database.reference.child("Emergency")
+        attentionRef = database.reference.child("Attention")
 
         replaceFragment(Home())
 
@@ -58,13 +61,28 @@ class MainActivity : AppCompatActivity() {
                 // 데이터베이스 읽기가 취소되었을 때 처리할 내용을 여기에 구현합니다.
             }
         }
+        attentionListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val attentionValue = dataSnapshot.getValue(Boolean::class.java)
+                if (attentionValue == true) {
+                    // Emergency 값이 true로 변경되었을 때 알림을 보내는 로직을 여기에 구현합니다.
+                    sendAttentionNotification()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // 데이터베이스 읽기가 취소되었을 때 처리할 내용을 여기에 구현합니다.
+            }
+        }
 
         emergencyRef.addValueEventListener(emergencyListener)
+        attentionRef.addValueEventListener(attentionListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         emergencyRef.removeEventListener(emergencyListener)
+        attentionRef.removeEventListener(attentionListener)
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -92,6 +110,30 @@ class MainActivity : AppCompatActivity() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId, "Emergency Channel", NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(0, notificationBuilder.build())
+    }
+    private fun sendAttentionNotification() {
+        val channelId = "attention_channel_id" // 알림 채널 ID
+        val title = "Attention" // 알림 제목
+        val message = "Attention situation detected" // 알림 메시지
+
+        val intent = Intent(this, MainActivity::class.java) // 알림 클릭 시 실행할 액티비티 지정
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE) // FLAG_IMMUTABLE 추가
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "Attention Channel", NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(channel)
         }
 

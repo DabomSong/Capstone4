@@ -1,7 +1,9 @@
 package com.dabom.capstone4
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.dabom.capstone4.databinding.FragmentHomeBinding
 import com.google.firebase.database.*
@@ -44,9 +48,9 @@ class Home : Fragment() {
         val webView2: WebView = binding.webView2
 
         // WebView1 설정
-        webView1.loadUrl("http://172.18.197.204/")
-        webView1.settings.javaScriptEnabled = true
 
+        webView1.loadUrl("http://172.18.82.47")
+        webView1.settings.javaScriptEnabled = true
         // WebView2 설정
         webView2.loadUrl("http://172.18.197.204/")
         webView2.settings.javaScriptEnabled = true
