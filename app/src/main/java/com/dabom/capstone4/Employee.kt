@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ class Employee : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var employeeAdapter: EmployeeAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var imageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,12 @@ class Employee : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         // EmployeeAdapter 생성
-        employeeAdapter = EmployeeAdapter()
+        employeeAdapter = EmployeeAdapter(requireActivity())
+
+        // RecyclerView에 어댑터를 설정 (null 체크 추가)
+        if (recyclerView != null && employeeAdapter != null) {
+            recyclerView.adapter = employeeAdapter
+        }
 
         // RecyclerView에 어댑터를 설정
         recyclerView.adapter = employeeAdapter

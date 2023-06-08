@@ -1,80 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cctv"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CCTV">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewWebView1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="20dp"
-        android:elevation="10dp"
-        app:cardCornerRadius="10dp"
-        android:stateListAnimator="@null">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Linear layout to display additional WebViews -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!-- First WebView with title -->
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="CCTV1"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <WebView
-                android:id="@+id/webView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </WebView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="CCTV2"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <WebView
-                android:id="@+id/webView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </WebView>
-
-            <!-- Second WebView with title -->
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="bottom">
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button"
+            <RadioButton
+                android:id="@+id/radioButtonAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="목록으로 이동" />
+                android:text="전체       " />
 
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/radioButtonEmergency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emergency     " />
 
-</FrameLayout>
+            <RadioButton
+                android:id="@+id/radioButtonAttention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Attention      " />
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cctvlistView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

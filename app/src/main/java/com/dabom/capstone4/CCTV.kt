@@ -1,49 +1,75 @@
 package com.dabom.capstone4
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.widget.Button
-import android.widget.VideoView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.cardview.widget.CardView
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
-import java.io.File
+import com.google.firebase.storage.StorageReference
 
 class CCTV : Fragment() {
-    private lateinit var webView1: WebView
-    private lateinit var webView2: WebView
-    private lateinit var button: Button
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: CCTVAdapter
+    private lateinit var radioGroup: RadioGroup
+
+    private var fileList = mutableListOf<StorageReference>()
+    private var filteredFileList = mutableListOf<StorageReference>()
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_c_c_t_v, container, false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_c_c_t_v, container, false)
 
-        webView1 = rootView.findViewById(R.id.webView1)
-        webView2 = rootView.findViewById(R.id.webView2)
+        recyclerView = view.findViewById(R.id.cctvlistView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        webView1.settings.javaScriptEnabled = true
-        webView1.loadUrl("http://172.18.82.47/")
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference.child("videos/C:/Users/user/Desktop/Capstone/Jupyter/2022_2_Capstone/Video")
 
-        webView2.settings.javaScriptEnabled = true
-        webView2.loadUrl("http://172.18.197.204/")
-
-        button = rootView.findViewById(R.id.button)
-        button.setOnClickListener {
-
-            // 다른 Fragment 띄우기
-            val fragmentManager = parentFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.cardViewWebView1, CCTVListView())
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-
-
+        radioGroup = view.findViewById(R.id.radioGroup)
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioButtonAll -> filterFiles(null)
+                R.id.radioButtonEmergency -> filterFiles("Emergency")
+                R.id.radioButtonAttention -> filterFiles("Attention")
+            }
+            adapter.notifyDataSetChanged()
         }
-        return rootView
+
+        storageRef.listAll().addOnSuccessListener { listResult ->
+            fileList.clear()
+            for (item in listResult.items) {
+                fileList.add(item)
+            }
+            filterFiles(null)
+            adapter = CCTVAdapter(filteredFileList)
+            recyclerView.adapter = adapter
+        }.addOnFailureListener { exception ->
+            // 예외 처리 코드 작성
+        }
+        return view
+    }
+
+    private fun filterFiles(filterType: String?) {
+        filteredFileList.clear()
+        if (filterType == null) {
+            filteredFileList.addAll(fileList)
+        } else {
+            for (file in fileList) {
+                val fileName = file.name
+                if (fileName.contains(filterType, ignoreCase = true)) {
+                    filteredFileList.add(file)
+                }
+            }
+        }
     }
 }

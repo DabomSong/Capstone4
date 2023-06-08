@@ -46,14 +46,66 @@ class Home : Fragment() {
 
         val webView1: WebView = binding.webView1
         val webView2: WebView = binding.webView2
+        val webView3: WebView = binding.webView3
+
+
+        // WebView1 설정
+        webView1.settings.javaScriptEnabled = true
+        webView1.settings.loadWithOverviewMode = true
+        webView1.settings.useWideViewPort = true
+
+        webView1.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                val params = webView1.layoutParams as LinearLayout.LayoutParams
+                params.width = LinearLayout.LayoutParams.MATCH_PARENT
+                params.height = LinearLayout.LayoutParams.MATCH_PARENT
+                webView1.layoutParams = params
+            }
+        }
+
+// WebView2 설정
+        webView2.settings.javaScriptEnabled = true
+        webView2.settings.loadWithOverviewMode = true
+        webView2.settings.useWideViewPort = true
+
+        webView2.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                val params = webView2.layoutParams as LinearLayout.LayoutParams
+                params.width = LinearLayout.LayoutParams.MATCH_PARENT
+                params.height = LinearLayout.LayoutParams.MATCH_PARENT
+                webView2.layoutParams = params
+            }
+        }
+
+// WebView3 설정
+        webView3.settings.javaScriptEnabled = true
+        webView3.settings.loadWithOverviewMode = true
+        webView3.settings.useWideViewPort = true
+
+        webView3.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                val params = webView3.layoutParams as LinearLayout.LayoutParams
+                params.width = LinearLayout.LayoutParams.MATCH_PARENT
+                params.height = LinearLayout.LayoutParams.MATCH_PARENT
+                webView3.layoutParams = params
+            }
+        }
 
         // WebView1 설정
 
-        webView1.loadUrl("http://172.18.82.47")
+        webView1.loadUrl("http://192.168.20.178/")
         webView1.settings.javaScriptEnabled = true
         // WebView2 설정
-        webView2.loadUrl("http://172.18.197.204/")
+        webView2.loadUrl("http://192.168.219.120:8000/")
         webView2.settings.javaScriptEnabled = true
+
+        // WebView2 설정
+        webView3.loadUrl("http://192.168.219.120:9000/")
+        webView3.settings.javaScriptEnabled = true
+
 
         // Firebase 실시간 데이터베이스의 "users" 레퍼런스를 가져옴
         database = FirebaseDatabase.getInstance().getReference("users")
