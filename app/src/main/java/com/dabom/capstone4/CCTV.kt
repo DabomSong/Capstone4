@@ -47,9 +47,7 @@ class CCTV : Fragment() {
 
         storageRef.listAll().addOnSuccessListener { listResult ->
             fileList.clear()
-            for (item in listResult.items) {
-                fileList.add(item)
-            }
+            fileList.addAll(listResult.items)
             filterFiles(null)
             adapter = CCTVAdapter(filteredFileList)
             recyclerView.adapter = adapter
@@ -68,8 +66,10 @@ class CCTV : Fragment() {
                 val fileName = file.name
                 if (fileName.contains(filterType, ignoreCase = true)) {
                     filteredFileList.add(file)
+
                 }
             }
         }
+        filteredFileList.sortByDescending {it.name}
     }
 }

@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        // 화면 회전 허용
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+
 
         database = FirebaseDatabase.getInstance()
         emergencyRef = database.reference.child("Emergency")

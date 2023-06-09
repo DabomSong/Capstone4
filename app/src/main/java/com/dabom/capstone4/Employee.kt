@@ -17,7 +17,6 @@ class Employee : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var employeeAdapter: EmployeeAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var imageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

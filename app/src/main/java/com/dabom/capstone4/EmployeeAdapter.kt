@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
+
 class EmployeeAdapter(private val activity: FragmentActivity?) :
     RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
 
