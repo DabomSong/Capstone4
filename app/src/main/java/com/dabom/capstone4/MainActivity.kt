@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.media.MediaPlayer
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var emergencyListener: ValueEventListener
     private lateinit var attentionListener: ValueEventListener
     private lateinit var emergencyDialog: Dialog
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +59,14 @@ class MainActivity : AppCompatActivity() {
         emergencyDialog = Dialog(this)
         emergencyDialog.setContentView(R.layout.emergency_dialog)
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.emergency_alarm)
+        mediaPlayer.isLooping = true
+
         val confirmButton = emergencyDialog.findViewById<Button>(R.id.confirmButton)
 
         confirmButton.setOnClickListener {
             emergencyDialog.dismiss()
+            stopAlarm()
             bottomNavigationView.selectedItemId = R.id.home
         }
         emergencyListener = object : ValueEventListener {
@@ -68,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 val emergencyValue = dataSnapshot.getValue(Boolean::class.java)
                 if (emergencyValue == true) {
                     emergencyDialog.show()
+                    startAlarm()
                     sendEmergencyNotification()
                 }
             }
@@ -98,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         emergencyRef.removeEventListener(emergencyListener)
         attentionRef.removeEventListener(attentionListener)
+        mediaPlayer.release()
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -108,6 +116,20 @@ class MainActivity : AppCompatActivity() {
     private fun showEmergencyDialog() {
         emergencyDialog.show()
     }
+
+    private fun startAlarm() {
+        if (!mediaPlayer.isPlaying) {
+            mediaPlayer.start()
+        }
+    }
+
+    private fun stopAlarm() {
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+            mediaPlayer.prepare()
+        }
+    }
+
     private fun sendEmergencyNotification() {
         val channelId = "emergency_channel_id" // 알림 채널 ID
         val title = "Emergency" // 알림 제목
