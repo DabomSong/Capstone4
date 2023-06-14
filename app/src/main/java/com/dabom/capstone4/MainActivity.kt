@@ -1,5 +1,6 @@
 package com.dabom.capstone4
 
+import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,6 +10,7 @@ import android.content.pm.ActivityInfo
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import com.dabom.capstone4.databinding.ActivityMainBinding
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var attentionRef: DatabaseReference
     private lateinit var emergencyListener: ValueEventListener
     private lateinit var attentionListener: ValueEventListener
+    private lateinit var emergencyDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +54,20 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        emergencyDialog = Dialog(this)
+        emergencyDialog.setContentView(R.layout.emergency_dialog)
+
+        val confirmButton = emergencyDialog.findViewById<Button>(R.id.confirmButton)
+
+        confirmButton.setOnClickListener {
+            emergencyDialog.dismiss()
+            bottomNavigationView.selectedItemId = R.id.home
+        }
         emergencyListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val emergencyValue = dataSnapshot.getValue(Boolean::class.java)
                 if (emergencyValue == true) {
-                    // Emergency 값이 true로 변경되었을 때 알림을 보내는 로직을 여기에 구현합니다.
+                    emergencyDialog.show()
                     sendEmergencyNotification()
                 }
             }
@@ -93,7 +105,9 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.frame_layout, fragment)
         transaction.commit()
     }
-
+    private fun showEmergencyDialog() {
+        emergencyDialog.show()
+    }
     private fun sendEmergencyNotification() {
         val channelId = "emergency_channel_id" // 알림 채널 ID
         val title = "Emergency" // 알림 제목

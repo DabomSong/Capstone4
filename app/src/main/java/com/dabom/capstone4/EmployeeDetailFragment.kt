@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
-import java.io.IOException
-
 class EmployeeDetailFragment : DialogFragment() {
 
     private lateinit var nameTextView: TextView
@@ -20,7 +19,6 @@ class EmployeeDetailFragment : DialogFragment() {
     private lateinit var dormitoryTextView: TextView
     private lateinit var positionTextView: TextView
     private lateinit var profileImageView: ImageView
-
     private var storageReference: StorageReference? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,6 +61,8 @@ class EmployeeDetailFragment : DialogFragment() {
                 // 이미지 다운로드가 실패했을 때
                 profileImageView.setImageResource(R.drawable.ic_baseline_person_24)
             }
+
+
         }
 
         return rootView
