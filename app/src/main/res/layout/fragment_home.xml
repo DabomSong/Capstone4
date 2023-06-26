@@ -12,256 +12,310 @@
 
         <!-- Card view for displaying the -->
         <!-- Pie chart and details of pie chart -->
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewGraph"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:elevation="10dp"
-                app:cardCornerRadius="10dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
-
-                <!--Linear layout to display pie chart -->
-                <!-- and details of pie chart-->
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewGraph"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
 
-                    <!--Pie chart to display the data-->
 
-                    <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/piechart"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:layout_weight="1"
-                        android:padding="6dp"
+                    <!--Linear layout to display pie chart -->
+                    <!-- and details of pie chart-->
 
-                        />
-
-                    <!--Creating another linear layout -->
-                    <!-- to display pie chart details -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <!--Pie chart to display the data-->
+
+                        <org.eazegraph.lib.charts.PieChart
+                            android:id="@+id/piechart"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="1"
+                            android:padding="6dp"
+
+                            />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical">
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
 
-                            <!--View to display the green color icon-->
-                            <View
-                                android:layout_width="15dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/Python" />
-
-                            <!--Text view to display python text -->
-                            <TextView
-                                android:id="@+id/present"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:text="출근" />
+                                android:layout_gravity="center_vertical">
+
+                                <!--View to display the green color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/Python" />
+
+                                <!--Text view to display python text -->
+                                <TextView
+                                    android:id="@+id/present"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="출근" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp">
+
+                                <!--View to display the red color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/CPP" />
+
+                                <!--Text view to display C++ text -->
+                                <TextView
+                                    android:id="@+id/absent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="부재" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp">
+
+                                <!--View to display the yellow color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/R" />
+
+                                <!--Text view to display R -->
+                                <TextView
+                                    android:id="@+id/late"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="지각" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="5dp">
+                            android:orientation="vertical">
 
-                            <!--View to display the red color icon-->
-                            <View
-                                android:layout_width="15dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/CPP" />
-
-                            <!--Text view to display C++ text -->
-                            <TextView
-                                android:id="@+id/absent"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:text="부재" />
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView"
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/temperature_icon" />
+
+                                <TextView
+                                    android:id="@+id/tempTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:text="온도: 0℃" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imageView2"
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    app:srcCompat="@drawable/humidity_icon" />
+
+                                <TextView
+                                    android:id="@+id/humidTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:text="습도: 0%" />
+                            </LinearLayout>
 
                         </LinearLayout>
 
+                        <!--Creating another linear layout -->
+                        <!-- to display pie chart details -->
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewWebView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
+
+                    <!-- Linear layout to display additional WebViews -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <!-- First WebView with title -->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="5dp">
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                            <!--View to display the yellow color icon-->
-                            <View
-                                android:layout_width="15dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/R" />
-
-                            <!--Text view to display R -->
                             <TextView
-                                android:id="@+id/late"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:text="지각" />
+                                android:padding="8dp"
+                                android:text="CCTV1"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <WebView
+                                android:id="@+id/webView1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <!-- Second WebView with title -->
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewWebView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <!-- First WebView with title -->
+
+                        <!-- Second WebView with title -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="CCTV2"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <WebView
+                                android:id="@+id/webView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
 
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewWebView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:elevation="10dp"
-                app:cardCornerRadius="10dp">
-
-                <!-- Linear layout to display additional WebViews -->
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewWebView3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
 
-                    <!-- First WebView with title -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="CCTV1"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                        <!-- First WebView with title -->
 
-                        <WebView
-                            android:id="@+id/webView1"
+                        <!-- Second WebView with title -->
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="CCTV3"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <WebView
+                                android:id="@+id/webView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
-
-                    <!-- Second WebView with title -->
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewWebView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:elevation="10dp"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <!-- First WebView with title -->
-
-                    <!-- Second WebView with title -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="CCTV2"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <WebView
-                            android:id="@+id/webView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewWebView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:elevation="10dp"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <!-- First WebView with title -->
-
-                    <!-- Second WebView with title -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="CCTV3"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <WebView
-                            android:id="@+id/webView3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,13 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
 class EmployeeDetailFragment : DialogFragment() {
 
     private lateinit var nameTextView: TextView
@@ -19,7 +24,9 @@ class EmployeeDetailFragment : DialogFragment() {
     private lateinit var dormitoryTextView: TextView
     private lateinit var positionTextView: TextView
     private lateinit var profileImageView: ImageView
+    private lateinit var attendenceButton: Button
     private var storageReference: StorageReference? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_employee_detail, container, false)
@@ -29,9 +36,24 @@ class EmployeeDetailFragment : DialogFragment() {
         dormitoryTextView = rootView.findViewById(R.id.dormitoryTextView)
         positionTextView = rootView.findViewById(R.id.positionTextView)
         profileImageView = rootView.findViewById(R.id.profileImage)
+        attendenceButton = rootView.findViewById(R.id.attendanceCheckButton)
 
         // Firebase Storage의 레퍼런스 가져오기
         storageReference = FirebaseStorage.getInstance().reference
+
+
+        val calendar = Calendar.getInstance()
+        calendar.set(2023, Calendar.MAY, 9)
+        val startDate = calendar.time
+        val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val items = mutableListOf<String>()
+
+
+        val today = Calendar.getInstance().time
+        while (calendar.time <= today) {
+            items.add(dateFormat.format(calendar.time))
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+        }
 
         // 가져온 정보를 텍스트뷰에 설정
         val args = arguments
@@ -45,6 +67,7 @@ class EmployeeDetailFragment : DialogFragment() {
             nameTextView.text = name
             dormitoryTextView.text = dormitory
             positionTextView.text = position
+
 
             // 이미지를 Firebase Storage에서 가져와서 ImageView에 설정
             val imageReference = storageReference?.child("Pictures/$id.jpg")
@@ -62,9 +85,17 @@ class EmployeeDetailFragment : DialogFragment() {
                 profileImageView.setImageResource(R.drawable.ic_baseline_person_24)
             }
 
-
+            attendenceButton.setOnClickListener {
+                val dialogBuilder = AlertDialog.Builder(requireContext())
+                dialogBuilder.setTitle("날짜 선택")
+                dialogBuilder.setItems(items.toTypedArray(), null)
+                val dialog = dialogBuilder.create()
+                dialog.show()
+            }
         }
 
         return rootView
     }
+
+
 }

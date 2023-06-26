@@ -208,25 +208,11 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-                                    <LinearLayout
+                                    <Button
+                                        android:id="@+id/attendanceCheckButton"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:orientation="horizontal">
-
-                                        <TextView
-                                            android:id="@+id/textView8"
-                                            android:layout_width="60dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center_vertical"
-                                            android:layout_marginLeft="15dp"
-                                            android:text="출근 정보" />
-
-                                        <CalendarView
-                                            android:id="@+id/calendarView"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content" />
-                                    </LinearLayout>
-
+                                        android:layout_height="wrap_content"
+                                        android:text="출근정보" />
                                 </androidx.cardview.widget.CardView>
 
                             </androidx.constraintlayout.widget.ConstraintLayout>

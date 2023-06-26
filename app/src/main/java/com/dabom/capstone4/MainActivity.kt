@@ -22,12 +22,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: FirebaseDatabase
+    private lateinit var detectRef: DatabaseReference
     private lateinit var emergencyRef: DatabaseReference
     private lateinit var attentionRef: DatabaseReference
     private lateinit var emergencyListener: ValueEventListener
     private lateinit var attentionListener: ValueEventListener
+    private lateinit var detectListener: ValueEventListener
     private lateinit var emergencyDialog: Dialog
     private lateinit var mediaPlayer: MediaPlayer
+    val homeFragment = Home()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +42,20 @@ class MainActivity : AppCompatActivity() {
 
 
         database = FirebaseDatabase.getInstance()
+        detectRef = database.reference.child("Detect")
         emergencyRef = database.reference.child("Emergency")
         attentionRef = database.reference.child("Attention")
 
-        replaceFragment(Home())
+        replaceFragment(Home(), "Home")
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.cctv -> replaceFragment(CCTV())
-                R.id.home -> replaceFragment(Home())
-                R.id.employee -> replaceFragment(Employee())
-                R.id.settings -> replaceFragment(Settings())
+                R.id.cctv -> replaceFragment(CCTV(), "CCTV")
+                R.id.home -> replaceFragment(Home(), "Home")
+                R.id.employee -> replaceFragment(Employee(), "Employee")
+                R.id.settings -> replaceFragment(Settings(), "Settings")
             }
             true
         }
@@ -68,6 +72,21 @@ class MainActivity : AppCompatActivity() {
             emergencyDialog.dismiss()
             stopAlarm()
             bottomNavigationView.selectedItemId = R.id.home
+        }
+
+        detectListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val detectValue = dataSnapshot.getValue(Boolean::class.java)
+                if (detectValue == true) {
+                    emergencyDialog.show()
+                    startAlarm()
+                    sendDetectNotification()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // 데이터베이스 읽기가 취소되었을 때 처리할 내용을 여기에 구현합니다.
+            }
         }
         emergencyListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -96,22 +115,25 @@ class MainActivity : AppCompatActivity() {
                 // 데이터베이스 읽기가 취소되었을 때 처리할 내용을 여기에 구현합니다.
             }
         }
-
+        detectRef.addValueEventListener(detectListener)
         emergencyRef.addValueEventListener(emergencyListener)
         attentionRef.addValueEventListener(attentionListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        detectRef.removeEventListener(detectListener)
         emergencyRef.removeEventListener(emergencyListener)
         attentionRef.removeEventListener(attentionListener)
         mediaPlayer.release()
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, title: String) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_layout, fragment)
         transaction.commit()
+
+        supportActionBar?.title = title
     }
     private fun showEmergencyDialog() {
         emergencyDialog.show()
@@ -128,6 +150,30 @@ class MainActivity : AppCompatActivity() {
             mediaPlayer.stop()
             mediaPlayer.prepare()
         }
+    }
+    private fun sendDetectNotification() {
+        val channelId = "detect_channel_id" // 알림 채널 ID
+        val title = "Detect" // 알림 제목
+        val message = "Detect situation detected" // 알림 메시지
+
+        val intent = Intent(this, MainActivity::class.java) // 알림 클릭 시 실행할 액티비티 지정
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE) // FLAG_IMMUTABLE 추가
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "Detect Channel", NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(0, notificationBuilder.build())
     }
 
     private fun sendEmergencyNotification() {

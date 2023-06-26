@@ -19,12 +19,19 @@ import org.eazegraph.lib.models.PieModel
 
 class Home : Fragment() {
 
+
     private lateinit var binding: FragmentHomeBinding
     private lateinit var database: DatabaseReference
     private lateinit var pieChart: PieChart
     private lateinit var presentCountTextView: TextView
     private lateinit var absentCountTextView: TextView
     private lateinit var lateCountTextView: TextView
+    private lateinit var tempTextView: TextView
+    private lateinit var humidTextView: TextView
+    lateinit var webView1: WebView
+    lateinit var webView2: WebView
+    lateinit var webView3: WebView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,15 +43,48 @@ class Home : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         pieChart = binding.piechart
         presentCountTextView = binding.present
         absentCountTextView = binding.absent
         lateCountTextView = binding.late
 
-        val webView1: WebView = binding.webView1
-        val webView2: WebView = binding.webView2
-        val webView3: WebView = binding.webView3
+        webView1 = binding.webView1
+        webView2 = binding.webView2
+        webView3 = binding.webView3
 
+        tempTextView = binding.tempTextView
+        humidTextView = binding.humidTextView
+
+        val tempData = FirebaseDatabase.getInstance().getReference("Temp")
+        val humidData = FirebaseDatabase.getInstance().getReference("Humid")
+
+        val tempListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val tempValue = dataSnapshot.value.toString()
+                tempTextView.text = "온도: $tempValue ℃"
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e(TAG, "Failed to read value.", databaseError.toException())
+            }
+        }
+
+        val humidListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val humidValue = dataSnapshot.value.toString()
+                humidTextView.text = "습도: $humidValue %"
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e(TAG, "Failed to read value.", databaseError.toException())
+            }
+        }
+        // "Temp" 값 변경 시 리스너 연결
+        tempData.addValueEventListener(tempListener)
+
+        // "Humid" 값 변경 시 리스너 연결
+        humidData.addValueEventListener(humidListener)
 
         // WebView1 설정
         webView1.settings.javaScriptEnabled = true
@@ -93,14 +133,14 @@ class Home : Fragment() {
 
         // WebView1 설정
 
-        webView1.loadUrl("http://192.168.219.129/")
+        webView1.loadUrl("http://192.168.0.16/")
         webView1.settings.javaScriptEnabled = true
         // WebView2 설정
-        webView2.loadUrl("http://192.168.219.120:8000/")
+        webView2.loadUrl("http://192.168.0.18:8000/")
         webView2.settings.javaScriptEnabled = true
 
         // WebView2 설정
-        webView3.loadUrl("http://192.168.219.120:9000/")
+        webView3.loadUrl("http://192.168.0.18:9000/")
         webView3.settings.javaScriptEnabled = true
 
 
